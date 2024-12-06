@@ -1,8 +1,23 @@
 // import React from 'react'
+import axios from 'axios';
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 
 
+
 const Navbar = () => {
+    const [search, setSearch] = useState("");
+
+    const handleonchange = (e) => {
+        setSearch(e.target.value)
+    }
+    const hadleonsubmit = async (e) => {
+        e.preventDefault();
+        console.log(search)
+        const response = await axios.get(`http://localhost:8090/search?search=${search}`);
+        setSearchdmovie(response.data)
+        setSearch("")
+    }
     return (
         <>
             <nav className="bg-zinc-800 shadow-md sticky top-0">
@@ -15,11 +30,13 @@ const Navbar = () => {
                         </Link>
                     </div>
                     <div className="hidden md:flex items-center space-x-4">
-                        <form action="/search" method="get" className="flex items-center">
+                        <form className="flex items-center" onSubmit={hadleonsubmit}>
                             <input
                                 type="text"
-                                name="q"
+                                name="search"
                                 placeholder="Search movies..."
+                                value={search}
+                                onChange={handleonchange}
                                 required
                                 className="bg-zinc-700 text-zinc-100 placeholder-zinc-400 px-3 py-2 rounded-l-md focus:outline-none focus:ring-2 focus:ring-zinc-500"
                             />

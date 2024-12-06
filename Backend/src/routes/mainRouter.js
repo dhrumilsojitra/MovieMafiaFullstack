@@ -46,7 +46,7 @@ mainrouter.get("/search", async (req, res) => {
     //     console.log(error);
     // }
 
-    const search_data = req.query.q || "";
+    const search_data = req.query.search || "";
     const category = req.query.category || "";
 
     // Create a filter object
@@ -67,7 +67,8 @@ mainrouter.get("/search", async (req, res) => {
 
     try {
         const movies = await Movie.find(filter);
-        res.render("frontindex", { movies });
+        // res.render("frontindex", { movies });
+        res.status(200).json(movies);
     } catch (error) {
         console.log(error);
         res.status(500).send("Server Error");
