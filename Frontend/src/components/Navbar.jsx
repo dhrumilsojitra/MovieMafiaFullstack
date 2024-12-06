@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 
 
 
-const Navbar = () => {
+const Navbar = ({ setSearchdmovie }) => {
     const [search, setSearch] = useState("");
 
     const handleonchange = (e) => {

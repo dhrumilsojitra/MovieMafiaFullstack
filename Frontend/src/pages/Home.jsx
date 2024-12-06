@@ -1,4 +1,5 @@
 // import React from 'react'
+import { useState } from 'react';
 import MovieList from '../components/client/MovieList'
 import Navbar from '../components/navbar'
 
@@ -8,8 +9,8 @@ const Home = () => {
 
     return (
         <div>
-            <Navbar />
-            <MovieList />
+            <Navbar setSearchdmovie={setSearchdmovie} />
+            <MovieList searchdmovie={searchdmovie} />
         </div>
     )
 }
