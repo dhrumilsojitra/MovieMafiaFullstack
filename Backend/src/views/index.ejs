@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Movie Mafia || Admin</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+
+<body class="bg-zinc-900 text-zinc-200 font-sans leading-normal tracking-normal flex">
+  <!-- Loader -->
+  <%- include('partials/loader') %>
+
+    <!-- Sidebar -->
+    <%- include('partials/sidebar') %>
+      <!-- Main Content -->
+      <div class="flex-1 ml-0 md:ml-64 bg-zinc-900">
+        <!-- Navbar -->
+        <nav class="bg-zinc-800 shadow-md sticky top-0 mx-5 rounded-b-lg">
+          <div class="container mx-auto px-4 py-4 flex items-center justify-between">
+            <!-- Logo Section -->
+            <div class="flex items-center space-x-4">
+              <a href="/admin/dashboard" class="flex items-center">
+                <img src="/images/logo.png" alt="Logo" class="w-32 md:w-48 h-auto" />
+              </a>
+              <button id="nav-toggle" class="md:hidden text-zinc-100 focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16">
+                  </path>
+                </svg>
+              </button>
+            </div>
+
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex items-center space-x-6">
+              <form action="/admin/dashboard/search" method="get" class="flex items-center">
+                <input type="text" name="q" placeholder="Search movies..." required
+                  class="bg-zinc-700 text-zinc-100 placeholder-zinc-400 px-4 py-2 rounded-l-md focus:outline-none focus:ring-2 focus:ring-zinc-500 w-64" />
+                <button type="submit"
+                  class="bg-zinc-600 hover:bg-zinc-500 text-white px-4 py-2 rounded-r-md focus:outline-none focus:ring-2 focus:ring-zinc-500">
+                  Search
+                </button>
+              </form>
+              <select name="categories" id="categories"
+                class="bg-zinc-700 text-zinc-100 border border-zinc-600 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-zinc-500">
+                <option value="">Select Category</option>
+                <option value="">All Categories</option>
+                <option value="Horror">Horror</option>
+                <option value="Action">Action</option>
+                <option value="Comedy">Comedy</option>
+                <option value="Romance">Romance</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Mobile Menu -->
+          <div id="nav-menu" class="md:hidden hidden bg-zinc-800">
+            <div class="px-4 py-4">
+              <form action="/admin/dashboard/search" method="get" class="flex items-center mb-4">
+                <input type="text" name="q" placeholder="Search movies..." required
+                  class="bg-zinc-700 text-zinc-100 placeholder-zinc-400 px-4 py-2 rounded-l-md focus:outline-none focus:ring-2 focus:ring-zinc-500 w-full" />
+                <button type="submit"
+                  class="bg-zinc-600 hover:bg-zinc-500 text-white px-4 py-2 rounded-r-md focus:outline-none focus:ring-2 focus:ring-zinc-500">
+                  Search
+                </button>
+              </form>
+
+              <% if (user) { %>
+                <span class="text-zinc-200 font-semibold mb-4 block">Welcome, <%= user.username %>!</span>
+                <a href="/admin/logout"
+                  class="block bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-md transition duration-200 ease-in-out mb-2">
+                  Logout
+                </a>
+                <% } else { %>
+                  <a href="/admin/login"
+                    class="block bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-md transition duration-200 ease-in-out mb-2">
+                    Login
+                  </a>
+                  <% } %>
+            </div>
+          </div>
+        </nav>
+
+        <!-- Main Content -->
+        <div class="container mx-auto px-4 py-4">
+          <div class="flex justify-between space-x-4 bg-zinc-900 py-5">
+            <h2 class="text-xl font-bold text-zinc-100">Movies Table</h2>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="min-w-full bg-zinc-800 rounded-lg">
+              <thead>
+                <tr>
+                  <th
+                    class="px-6 py-3 border-b-2 border-zinc-700 text-left text-xs font-semibold text-zinc-100 uppercase tracking-wider">
+                    Image
+                  </th>
+                  <th
+                    class="px-6 py-3 border-b-2 border-zinc-700 text-left text-xs font-semibold text-zinc-100 uppercase tracking-wider">
+                    Title
+                  </th>
+                  <th
+                    class="px-6 py-3 border-b-2 border-zinc-700 text-left text-xs font-semibold text-zinc-100 uppercase tracking-wider">
+                    Categories
+                  </th>
+                  <th
+                    class="px-6 py-3 border-b-2 border-zinc-700 text-left text-xs font-semibold text-zinc-100 uppercase tracking-wider">
+                    Description
+                  </th>
+                  <th
+                    class="px-6 py-3 border-b-2 border-zinc-700 text-left text-xs font-semibold text-zinc-100 uppercase tracking-wider">
+                    Actions
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <% if (movies && movies.length> 0) { %> <% movies.forEach(movie=>
+                    { %>
+                    <tr>
+                      <td class="px-6 py-4 border-b border-zinc-700">
+                        <img src="<%= movie.image %>" alt="Movie Image" class="w-24 h-24 object-cover" />
+                      </td>
+                      <td class="px-6 py-4 border-b border-zinc-700 text-zinc-100">
+                        <%= movie.title %>
+                      </td>
+                      <td class="px-6 py-4 border-b border-zinc-700">
+                        <% movie.categories.forEach(category=> { %>
+                          <span class="bg-blue-600 text-blue-100 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded">
+                            <%= category %>
+                          </span>
+                          <% }); %>
+                      </td>
+                      <td class="px-6 py-4 border-b border-zinc-700 text-zinc-400 overflow-hidden max-h-16">
+                        <%= movie.description %>
+                      </td>
+                      <td class="px-6 py-4 border-b border-zinc-700 text-zinc-100">
+                        <div class="flex gap-3 items-center flex-wrap">
+                          <form action="/admin/dashboard/editmovie/<%= movie._id %>" method="get">
+                            <button type="submit" class="text-yellow-400 hover:text-yellow-300 font-semibold">
+                              Edit
+                            </button>
+                          </form>
+                          <form action="/admin/dashboard/deletemovie/<%= movie._id %>" method="post">
+                            <button type="submit" class="text-red-400 hover:text-red-300 font-semibold">
+                              Delete
+                            </button>
+                          </form>
+                          <a href="<%= movie.trailer %>" target="_blank"
+                            class="text-red-800 hover:text-red-500 font-semibold"><img src="/images/youtube-icon.png"
+                              alt="" width="20px" height="20px" /></a>
+                          <a href="<%= movie.download %>" target="_blank"
+                            class="text-blue-400 hover:text-blue-300 font-semibold">Download</a>
+                        </div>
+                      </td>
+                    </tr>
+                    <% }); %>
+                      <% } else { %>
+                        <tr>
+                          <td colspan="5" class="px-6 py-4 border-b border-zinc-700 text-center text-zinc-400">
+                            No movies available.
+                          </td>
+                        </tr>
+                        <% } %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <script src="/js/commonscript.js"></script>
+      <script>
+        document
+          .getElementById("sidebar-toggle")
+          .addEventListener("click", function () {
+            const sidebar = document.getElementById("sidebar");
+            sidebar.classList.toggle("-translate-x-full");
+            sidebar.classList.toggle("translate-x-0");
+          });
+        document
+          .getElementById("nav-toggle")
+          .addEventListener("click", function () {
+            const navMenu = document.getElementById("nav-menu");
+            navMenu.classList.toggle("hidden");
+          });
+        document
+          .getElementById("categories")
+          .addEventListener("change", function () {
+            const selectedCategory = this.value;
+            const url = new URL(window.location.href);
+            url.searchParams.set("category", selectedCategory);
+            window.location.href = url.href;
+          });
+      </script>
+</body>
+
+</html>

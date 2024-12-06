@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Movie Mafia || Admin</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+
+<body class="bg-zinc-900 text-zinc-200 font-sans leading-normal tracking-normal flex"><!-- Loader -->
+  <%- include('partials/loader') %>
+    <!-- Sidebar -->
+    <%- include('partials/sidebar') %>
+
+      <!-- Main Content -->
+      <div class="flex-1 ml-0 md:ml-64 bg-zinc-900">
+        <!-- Navbar -->
+        <nav class="bg-zinc-800 shadow-md sticky top-0 mx-5 rounded-b-lg">
+          <div class="container mx-auto px-4 py-4 flex items-center justify-between">
+            <!-- Logo Section -->
+            <div class="flex items-center space-x-4">
+              <a href="/admin/dashboard" class="flex items-center">
+                <img src="/images/logo.png" alt="Logo" class="w-32 md:w-48 h-auto" />
+              </a>
+            </div>
+          </div>
+        </nav>
+        <!-- Main Content -->
+        <div class="container mx-auto px-4 py-4">
+          <div class="flex justify-between items-center space-x-4 bg-zinc-900 py-5">
+            <h2 class="text-xl font-bold text-zinc-100">Admin Table</h2>
+
+            <% if (typeof error !=='undefined' && error) { %>
+              <div class="flex items-center p-2 bg-red-500 text-white rounded-lg shadow-lg">
+                <p class="text-base font-medium">
+                  <%= error %>
+                </p>
+              </div>
+              <% } %>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="min-w-full bg-zinc-800 rounded-lg">
+              <thead>
+                <tr>
+                  <th
+                    class="px-6 py-3 border-b-2 border-zinc-700 text-left text-xs font-semibold text-zinc-100 uppercase tracking-wider">
+                    Username
+                  </th>
+                  <th
+                    class="px-6 py-3 border-b-2 border-zinc-700 text-left text-xs font-semibold text-zinc-100 uppercase tracking-wider">
+                    Email
+                  </th>
+                  <th
+                    class="px-6 py-3 border-b-2 border-zinc-700 text-left text-xs font-semibold text-zinc-100 uppercase tracking-wider">
+                    Password
+                  </th>
+
+                  <th
+                    class="px-6 py-3 border-b-2 border-zinc-700 text-left text-xs font-semibold text-zinc-100 uppercase tracking-wider">
+                    Actions
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <% if (users && users.length> 0) { %> <% users.forEach(user=> { %>
+                    <tr>
+                      <td class="px-6 py-4 border-b border-zinc-700 text-zinc-100">
+                        <%= user.username %>
+                      </td>
+
+                      <td class="px-6 py-4 border-b border-zinc-700 text-zinc-400 overflow-hidden max-h-16">
+                        <%= user.email %>
+                      </td>
+
+                      <td class="px-6 py-4 border-b border-zinc-700 text-zinc-400 overflow-hidden max-h-16">
+                        <%= user.password %>
+                      </td>
+                      <td class="px-6 py-4 border-b border-zinc-700 text-zinc-100">
+                        <div class="flex gap-3 items-center flex-wrap">
+                          <form action="/admin/dashboard/deleteuser/<%= user._id %>" method="post">
+                            <button type="submit" class="text-red-400 hover:text-red-300 font-semibold">
+                              Delete
+                            </button>
+                          </form>
+                        </div>
+                      </td>
+                    </tr>
+                    <% }); %>
+                      <% } else { %>
+                        <tr>
+                          <td colspan="5" class="px-6 py-4 border-b border-zinc-700 text-center text-zinc-400">
+                            No users available.
+                          </td>
+                        </tr>
+                        <% } %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <script src="/js/commonscript.js"></script>
+      <script>
+        document
+          .getElementById("sidebar-toggle")
+          .addEventListener("click", function () {
+            const sidebar = document.getElementById("sidebar");
+            sidebar.classList.toggle("-translate-x-full");
+            sidebar.classList.toggle("translate-x-0");
+          });
+      </script>
+</body>
+
+</html>
