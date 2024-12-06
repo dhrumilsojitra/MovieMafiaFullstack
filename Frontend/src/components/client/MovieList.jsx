@@ -3,10 +3,11 @@
 import axios from "axios";
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
+import Loader from "../Loader";
 
 const MovieList = () => {
 
-    const [moviedata, setMovieData] = useState([]);
+    const [moviedata, setMovieData] = useState();
 
     const getMovieData = async () => {
         try {
@@ -22,6 +23,9 @@ const MovieList = () => {
     }, []);
     return (
         <>
+            {/* {!moviedata &&
+                <Loader />
+            } */}
             <div className="container mx-auto px-4 py-8">
                 <h2 className="text-xl font-bold text-zinc-100 mb-6">Available Movies</h2>
 
@@ -30,10 +34,12 @@ const MovieList = () => {
                     {
                         (moviedata == null ? <div className="bg-zinc-800 p-6 rounded-lg shadow-md text-center">
                             <p className="text-zinc-400">No movies available.</p>
+                            <Loader />
+
                         </div> : moviedata.map((movie, index) => {
                             return (
                                 <div className="bg-zinc-800 shadow-md rounded-lg overflow-hidden" key={index}>
-                                    <Link to="/list" >
+                                    <Link to={`/view-movie/${movie._id}`} >
                                         <img
                                             src={movie.image}
                                             alt="Movie Image"
@@ -44,11 +50,16 @@ const MovieList = () => {
                                         <h3 className="text-lg font-bold text-zinc-100">{movie.title}</h3>
                                         <div className="flex flex-wrap gap-2 my-2">
                                             category
-                                            <span
-                                                className="bg-blue-600 text-blue-100 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded"
-                                            >
-                                                category
-                                            </span>
+                                            {
+                                                movie?.categories?.map((category, index) => {
+                                                    return (<span
+                                                        className="bg-blue-600 text-blue-100 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded" key={index}
+                                                    >
+                                                        {category}
+                                                    </span>)
+                                                })
+                                            }
+
 
                                         </div>
                                         <p className="text-zinc-400 h-[60px] overflow-auto">
@@ -56,11 +67,11 @@ const MovieList = () => {
                                         </p>
                                         <div className="mt-4 flex gap-3 items-start justify-between flex-wrap">
                                             <div className="text-blue-400 hover:text-blue-300 font-semibold">
-                                                <Link href={movie.download} target="_blank">Download</Link>
+                                                <Link to={movie.download} target="_blank">Download</Link>
                                             </div>
                                             <div className="text-red-500 font-semibold">
                                                 <Link
-                                                    href={movie.trailer}
+                                                    to={movie.trailer}
                                                     target="_blank"
                                                     className="flex items-center gap-2"
                                                 ><img

@@ -1,10 +1,11 @@
 const express = require("express");
 const path = require("path");
+const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const dbConnect = require("./db");
 const {
-  isAuthenticated,
-  ensureDefaultUser,
+    isAuthenticated,
+    ensureDefaultUser,
 } = require("./src/middlewares/middleware");
 const adminrouter = require("./src/routes/adminRouter");
 const mainrouter = require("./src/routes/mainRouter");
@@ -12,6 +13,9 @@ const superadminrouter = require("./src/routes/superadminrouter");
 
 // Initialize Express application
 const app = express();
+
+// Enable CORS for all origins
+app.use(cors());
 
 // Load environment variables from a .env file
 require("dotenv").config();
@@ -48,9 +52,9 @@ app.use("/admin/dashboard", isAuthenticated, adminrouter);
 
 // Custom 404 page middleware using res.render
 app.use((req, res, next) => {
-  res.status(404).render("404");
+    res.status(404).render("404");
 });
 // Start the server and listen on the specified port
 app.listen(port, () => {
-  console.log(`App Server run on this port ${port}!`);
+    console.log(`App Server run on this port ${port}!`);
 });
