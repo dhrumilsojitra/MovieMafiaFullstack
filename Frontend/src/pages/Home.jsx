@@ -1,18 +1,21 @@
 // import React from 'react'
-import { useState } from 'react';
-import MovieList from '../components/client/MovieList'
-import Navbar from '../components/navbar'
+import { useState } from "react";
+import MovieList from "../components/client/MovieList";
+import Navbar from "../components/navbar";
 
 const Home = () => {
+  const [searchdmovie, setSearchdmovie] = useState();
+  const [category, setCategory] = useState("all");
+  return (
+    <div>
+      <Navbar
+        setSearchdmovie={setSearchdmovie}
+        setCategory={setCategory}
+        category={category}
+      />
+      <MovieList searchdmovie={searchdmovie} category={category} />
+    </div>
+  );
+};
 
-    const [searchdmovie, setSearchdmovie] = useState();
-
-    return (
-        <div>
-            <Navbar setSearchdmovie={setSearchdmovie} />
-            <MovieList searchdmovie={searchdmovie} />
-        </div>
-    )
-}
-
-export default Home
+export default Home;
