@@ -15,7 +15,7 @@ exports.loginUser = async (req, res) => {
     const { username, password } = req.body;
     const user = await User.findOne({ username });
     if (!user) {
-        return res.render("login", { error: "user is not exsist" });
+        return res.status(404).json( { error: "user is not exsist" });
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
@@ -29,19 +29,20 @@ exports.loginUser = async (req, res) => {
                 expiresIn: "1h", // Set token expiration time as per your needs
             }
         );
+        // localStorage.setItem("token",token)
         res.cookie("token", token, {
             httpOnly: true,
             secure: false,
             maxAge: 3600000, // 1 hour in milliseconds
         });
-        res.redirect("/admin/dashboard");
+        return res.status(200).json({message:"Login Suucesfull",token});
     } else {
         res.cookie("token", "", {
             expires: new Date(0),
             httpOnly: true,
             secure: false,
         });
-        return res.render("login", { error: "Password is incorrect" });
+        return res.status(500).json( { error: "Password is Incorrect" });
     }
 };
 exports.logoutUser = async (req, res) => {

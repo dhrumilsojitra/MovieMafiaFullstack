@@ -15,7 +15,10 @@ const superadminrouter = require("./src/routes/superadminrouter");
 const app = express();
 
 // Enable CORS for all origins
-app.use(cors());
+app.use( cors({
+    origin: "http://localhost:5173", // Frontend origin
+    credentials: true, // Allow cookies
+  }));
 
 // Load environment variables from a .env file
 require("dotenv").config();
