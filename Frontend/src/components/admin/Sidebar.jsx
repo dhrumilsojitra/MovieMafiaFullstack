@@ -1,5 +1,7 @@
 // import React from 'react'
 
+import { Link } from "react-router-dom";
+
 const Sidebar = () => {
   return (
     <>
@@ -17,16 +19,16 @@ const Sidebar = () => {
               <div className="flex items-center space-x-4 justify-center">
                 <div className="w-24 h-24 flex-shrink-0">
                   <img
-                    src="/uploads/tmp/<%= user.profilepic %>"
-                    alt="<%= user.username %>'s profile picture"
+                    src="/uploads/tmp/"
+                    alt=" profile picture"
                     className="w-full h-full object-cover rounded-full border-2 border-indigo-500 shadow-md"
                   />
                 </div>
               </div>
             </div>
 
-            <a
-              href="/admin/logout"
+            <Link
+              to="/admin/logout"
               className="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-md transition duration-200 flex items-center space-x-2"
             >
               <svg
@@ -37,7 +39,7 @@ const Sidebar = () => {
                 xmlns="http://www.w3.org/2000/svg"
               ></svg>
               <span>Logout</span>
-            </a>
+            </Link>
 
             <button
               id="sidebar-toggle"
@@ -63,37 +65,37 @@ const Sidebar = () => {
           <nav className="flex-grow">
             <ul className="space-y-2">
               <li>
-                <a
-                  href="/admin/dashboard"
+                <Link
+                  to="/admin/dashboard"
                   className="block px-4 py-3 text-zinc-100 hover:bg-zinc-700 rounded-md transition duration-200"
                 >
                   Dashboard
-                </a>
+                </Link>
               </li>
 
               <li>
-                <a
-                  href="/admin/dashboard/addmovie"
+                <Link
+                  to="/admin/addmovie"
                   className="block px-4 py-3 text-zinc-100 hover:bg-zinc-700 rounded-md transition duration-200"
                 >
                   Add Movie
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="/admin/dashboard/registration"
+                <Link
+                  to="/admin/registration"
                   className="block px-4 py-3 text-zinc-100 hover:bg-zinc-700 rounded-md transition duration-200"
                 >
                   Add Admin
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="/admin/dashboard/user"
+                <Link
+                  to="/admin/user"
                   className="block px-4 py-3 text-zinc-100 hover:bg-zinc-700 rounded-md transition duration-200"
                 >
                   Admin List
-                </a>
+                </Link>
               </li>
             </ul>
           </nav>
