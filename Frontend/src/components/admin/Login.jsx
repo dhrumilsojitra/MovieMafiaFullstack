@@ -30,7 +30,7 @@ const Login = () => {
         { withCredentials: true }
       );
       localStorage.setItem("token", response?.data?.token);
-      navigate("/admin/dashboard");
+      navigate("/admin");
     } catch (error) {
       const val = error?.response?.data?.error;
       setError(val);

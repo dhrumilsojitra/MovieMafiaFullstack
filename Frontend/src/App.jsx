@@ -8,6 +8,8 @@ import Adminlayout from "./pages/Adminlayout";
 import Privateroute from "./components/admin/Privateroute";
 import MovieTable from "./components/admin/MovieTable";
 import AddMovie from "./components/admin/AddMovie";
+import AddAdmin from "./components/admin/AddAdmin";
+import AdminList from "./components/admin/AdminList";
 // import Learing from "./pages/Learing";
 // import Sidebar from './components/sidebar'
 
@@ -18,9 +20,9 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/view-movie/:id" element={<MovieDetail />} />
-          <Route path="/admin" element={<AdminLogin />} />
+          <Route path="/superadmin" element={<AdminLogin />} />
           <Route
-            path="/admin/dashboard"
+            path="/admin"
             element={
               <Privateroute>
                 <Adminlayout />
@@ -28,7 +30,11 @@ function App() {
             }
           >
             <Route index element={<MovieTable />} />
-            <Route path="/admin/addmovie" element={<AddMovie />} />
+            <Route path="addmovie" element={<AddMovie />} />
+            <Route path="registration" element={<AddAdmin />} />
+            <Route path="user" element={<AdminList />} />
+
+
           </Route>
         </Routes>
       </BrowserRouter>

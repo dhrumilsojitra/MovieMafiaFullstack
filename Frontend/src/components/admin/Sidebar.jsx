@@ -66,7 +66,7 @@ const Sidebar = () => {
             <ul className="space-y-2">
               <li>
                 <Link
-                  to="/admin/dashboard"
+                  to="/admin"
                   className="block px-4 py-3 text-zinc-100 hover:bg-zinc-700 rounded-md transition duration-200"
                 >
                   Dashboard
