@@ -29,7 +29,6 @@ const Login = () => {
         logindata,
         { withCredentials: true }
       );
-      localStorage.setItem("token", response?.data?.token);
       navigate("/admin");
     } catch (error) {
       const val = error?.response?.data?.error;

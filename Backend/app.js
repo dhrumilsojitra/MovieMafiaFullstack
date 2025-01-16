@@ -52,6 +52,10 @@ const port = process.env.PORT || 3000;
 app.use("/", mainrouter);
 app.use("/admin", superadminrouter);
 app.use("/admin/dashboard", isAuthenticated, adminrouter);
+app.use("/validate-token", isAuthenticated, (req,res)=>{
+    return res.json({valid:true})
+});
+
 
 // Custom 404 page middleware using res.render
 app.use((req, res, next) => {

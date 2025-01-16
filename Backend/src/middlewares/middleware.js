@@ -8,16 +8,22 @@ const jwtSecretKey = process.env.SECRET_KEY;
 const isAuthenticated = async (req, res, next) => {
     const token = req.cookies.token;
     if (token) {
-        const decoded = jwt.verify(token, jwtSecretKey);
+        try {
+            const decoded = jwt.verify(token, jwtSecretKey);
         const user = await User.findById(decoded.userId);
         if (user) {
             res.locals.user = user;
             req.user = user; // Attach user information to req.user
             return next();
+        }else{
+            return res.status(401).json({ error: "User not found" });
         }
+        } catch (error) {
+            return res.status(401).json({ error: "Invalid or expired token" });
+        }
+        
     } else {
-        res.clearCookie("token");
-        return res.redirect("/admin/login");
+        return res.status(401).json({ error: "Token not provided" });
     }
 };
 
