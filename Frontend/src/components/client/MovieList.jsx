@@ -1,9 +1,8 @@
 // import React from 'react'
-
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Loader from "../Loader";
+import apiInstance from "../../api/api";
 
 const MovieList = ({ searchdmovie, category }) => {
   const [moviedata, setMovieData] = useState([]);
@@ -12,8 +11,8 @@ const MovieList = ({ searchdmovie, category }) => {
   const getMovieData = async () => {
     try {
       setIsLoading(true);
-      const response = await axios.get(
-        `http://localhost:8090/?category=${category}`
+      const response = await apiInstance.get(
+        `/?category=${category}`
       );
       console.log(response.data);
       if (response?.data) {

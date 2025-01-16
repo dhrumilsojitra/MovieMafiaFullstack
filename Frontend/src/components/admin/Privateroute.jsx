@@ -1,18 +1,16 @@
 // import React from "react";
 
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 import Loader from "../Loader";
+import apiInstance from "../../api/api";
 
 const Privateroute = ({ children }) => {
   const [isAuth, setIsAuth] = useState(null);
   useEffect(()=>{
     const validateToken = async()=>{
       try {
-        const response =await axios.get('http://localhost:8090/validate-token',{
-          withCredentials:true,
-        })
+        const response =await apiInstance.get('/validate-token')
         // console.log(response.data)
         if(response.data.valid === true){
           setIsAuth(true)

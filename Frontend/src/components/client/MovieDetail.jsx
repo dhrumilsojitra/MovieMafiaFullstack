@@ -1,7 +1,8 @@
-import axios from "axios";
+
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import Navbar from "../navbar";
+import apiInstance from "../../api/api";
 
 const MovieDetail = () => {
   const id = useParams();
@@ -9,8 +10,8 @@ const MovieDetail = () => {
   const [movie, setMovie] = useState();
 
   const data = async () => {
-    const response = await axios.get(
-      `http://localhost:8090/view-movie/${id?.id}`
+    const response = await apiInstance.get(
+      `/view-movie/${id?.id}`
     );
     setMovie(response.data);
   };

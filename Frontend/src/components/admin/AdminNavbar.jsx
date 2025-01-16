@@ -1,5 +1,7 @@
 // import React from "react";
 
+import { Link } from "react-router-dom";
+
 const AdminNavbar = () => {
   return (
     <>
@@ -7,13 +9,13 @@ const AdminNavbar = () => {
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           {/* <!-- Logo Section --> */}
           <div className="flex items-center space-x-4">
-            <a href="/admin/dashboard" className="flex items-center">
+            <Link to="/admin" className="flex items-center">
               <img
                 src="/images/logo.png"
                 alt="Logo"
                 className="w-32 md:w-48 h-auto"
               />
-            </a>
+            </Link>
             <button
               id="nav-toggle"
               className="md:hidden text-zinc-100 focus:outline-none"

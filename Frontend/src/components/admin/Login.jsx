@@ -1,8 +1,8 @@
 // import React from 'react'
 
-import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import apiInstance from "../../api/api";
 // import { Navigate } from "react-router-dom";
 
 const Login = () => {
@@ -24,8 +24,8 @@ const Login = () => {
   };
   const loginapicall = async () => {
     try {
-      const response = await axios.post(
-        `http://localhost:8090/admin/login`,
+      const response = await apiInstance.post(
+        `/admin/login`,
         logindata,
         { withCredentials: true }
       );

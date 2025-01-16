@@ -1,7 +1,7 @@
 // import React from 'react'
-import axios from "axios";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import apiInstance from "../api/api";
 
 const Navbar = ({ setSearchdmovie, setCategory, category }) => {
   const [search, setSearch] = useState("");
@@ -11,8 +11,8 @@ const Navbar = ({ setSearchdmovie, setCategory, category }) => {
 
   const hadleonsubmit = async () => {
     console.log(search);
-    const response = await axios.get(
-      `http://localhost:8090/search?search=${search}&category=${category}`
+    const response = await apiInstance.get(
+      `/search?search=${search}&category=${category}`
     );
     setSearchdmovie(response.data);
     setSearch("");
