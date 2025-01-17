@@ -12,7 +12,7 @@ exports.getHomePage = async (req, res) => {
         }
         console.log(filter);
         const movies = await Movie.find(filter).sort({ _id: -1 });
-        res.render("index", { movies }); // Pass filtered movies to the view
+        res.status(200).json({ movies }); // Pass filtered movies to the view
     } catch (err) {
         console.error(err);
         res.status(500).json({ error: "Server Error" });
@@ -58,7 +58,7 @@ exports.postAddMoviePage = async (req, res) => {
 exports.deleteMoviePage = async (req, res) => {
     try {
         await Movie.findByIdAndDelete(req.params.id);
-        res.redirect("/admin");
+        res.status(200).json({delete:"Movie Deleted"});
     } catch (error) {
         console.error("Error deleting movie:", error);
         res.status(500).send("Internal Server Error");
